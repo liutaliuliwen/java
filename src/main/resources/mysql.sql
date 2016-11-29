@@ -1,0 +1,66 @@
+#创建表结构
+CREATE TABLE STUDENTS(
+  stud_id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL,
+  email varchar(50) NOT NULL,
+  dob date DEFAULT NULL,
+  PRIMARY KEY (stud_id)
+) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT  CHARSET = UTF8;
+
+#插入数据
+INSERT INTO STUDENTS(name, email, dob) VALUES('student1','student1@gmail.com','1983-06-25');
+INSERT INTO STUDENTS(name, email, dob) VALUES('student2','student2@gmail.com','1983-06-25');
+
+
+#在线学习系统
+CREATE TABLE STUDENTS(
+  stud_id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL,
+  email varchar(50) NOT NULL,
+  phone VARCHAR(15),
+  dob date DEFAULT NULL,
+  bio LONGTEXT,
+  pic BLOB,
+  ADDR_ID INT(11),
+  PRIMARY KEY (stud_id)
+) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT  CHARSET = UTF8;
+
+
+CREATE TABLE ADDRESSES(
+  addr_id int(11) NOT NULL AUTO_INCREMENT,
+  street VARCHAR(50) NOT NULL ,
+  city VARCHAR(50) NOT NULL ,
+  state VARCHAR(50) NOT NULL ,
+  zip VARCHAR(10),
+  country VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (addr_id)
+) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT  CHARSET = UTF8;
+
+
+CREATE TABLE TUTORS(
+  tutor_id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50),
+  email VARCHAR(50),
+  phone VARCHAR(15),
+  dob DATE,
+  bio LONGTEXT,
+  pic BLOB,
+  addr_id INT(11),
+  PRIMARY KEY (tutor_id)
+) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT  CHARSET = UTF8;
+
+CREATE TABLE COURSES(
+  course_id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100),
+  description VARCHAR(512),
+  start_date DATE,
+  end_date DATE,
+  tutor_id INT(11),
+  PRIMARY KEY (tutor_id)
+) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT  CHARSET = UTF8;
+
+
+CREATE TABLE COURSE_ENROLLMENT(
+  course_id INT(11),
+  stud_id INT(11)
+) ENGINE = InnoDB AUTO_INCREMENT=1 DEFAULT  CHARSET = UTF8;
