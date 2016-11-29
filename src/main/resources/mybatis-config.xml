@@ -1,21 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?> <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--设置属性文件-->
+    <!--resource 设置为外部属性文件-->
+    <!--property 定义内部属性标签-->
+    <!--优先级大于外部-->
+    <properties resource="db.properties">
+        <property name="username" value="db_user"/>
+        <property name="password" value="123456"/>
+    </properties>
+
+    <!--全局设置文件-->
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!--别名定义-->
+    <!--可以单独定义或定义包扫描模式-->
     <typeAliases>
+        <typeAlias  alias="Tutor" type="com.mybatis3.domain.Tutor"/>
         <typeAlias alias="Student" type="com.mybatis3.domain.Student"/>
+        <package name="com.mybatis3.domain"/>
     </typeAliases>
+
+    <typeHandlers>
+        <typeHandler handler="com.mybatis3.typehandlers.PhoneTypeHandler"/>
+        <package name="com.mybatis3.typehandlers"/>
+    </typeHandlers>
+
+    <!--MyBatis 支持配置多个数据源环境，可以将应用部署到不同的环境上-->
+    <!--DEV，TEST，QA，UAT，PRODUCTION等环境-->
+    <!--默认环境为development，需要改变环境，只要把默认环境修改为其他环境的id-->
+    <!--一个数据库对应一个环境，一个环境对应一个SqlSessionFactory-->
     <environments default="development">
         <environment id="development">
+            <!--事务管理，有两种类型JDBC,MANAGED-->
+            <!--JDBC是应用程序自己管理数据库连接的生命周期-->
+            <!--MANAGED是托管，把事务托管给应用服务器-->
             <transactionManager type="JDBC"/>
+            <!--数据源配置-->
+            <!--type有3个类型：UNPOOLED,POOLED,JNDI-->
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://10.23.33.228:3306/test"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+
+        <environment id="production">
+            <transactionManager type="MANAGED"></transactionManager>
+            <dataSource type="JNDI">
+                <property name="" value=""/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
         <mapper resource="com/mybatis3/mappers/StudentMapper.xml"/>
+        <mapper url="file://"/>
+        <mapper class="com.mybatis3.mappers.TutorMapper"/>
     </mappers>
 </configuration>
